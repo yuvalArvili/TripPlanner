@@ -1,0 +1,76 @@
+.history-wrapper {
+  background: linear-gradient(180deg, #c0e1cf 0%, #a7d0e4 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.history-header {
+  font-size: 2rem;
+  color: #2e2e2e;
+  margin-bottom: 30px;
+}
+
+.trips-container {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.trip-item {
+  background-color: rgba(237, 247, 234, 0.922);
+  border: 1px solid #cde3db;
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+}
+
+.trip-item:hover {
+  transform: translateY(-2px);
+}
+
+.trip-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.trip-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #2e2e2e;
+}
+
+.trip-desc {
+  font-size: 0.95rem;
+  color: #5a5a5a;
+}
+
+.view-button {
+  background-color: #1e2a38;
+  color: white;
+  border: none;
+  padding: 8px 30px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.view-button:hover {
+  background-color: #92b066;
+}
+
+.no-trips {
+  font-size: 1rem;
+  color: #777;
+  text-align: center;
+}

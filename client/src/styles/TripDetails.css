@@ -1,0 +1,32 @@
+.trip-details-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  padding: 24px;
+}
+
+.card {
+  background-color: rgba(237, 247, 234, 0.922);;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: visible;
+}
+
+.trip-info{
+    text-align: left;
+}
+
+.trip-map {
+  width: 100%;
+  height: 380px; 
+  border-radius: 8px;
+  margin-top: 5px;
+}
+
+.weather-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 7px;
+}
