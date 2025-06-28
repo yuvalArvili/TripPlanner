@@ -3,13 +3,16 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/HistoryPage.css'; 
 
+//main component for displaying saved trips
+//// It fetches trips from the backend and displays them in a list
 function HistoryPage() {
   const [trips, setTrips] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTrips = async () => {
-      try {
+      try {// Get the token from localStorage
+        // and fetch trips from the backend
         const token = localStorage.getItem('token');
         const res = await axios.get('/api/trips', {
           headers: {

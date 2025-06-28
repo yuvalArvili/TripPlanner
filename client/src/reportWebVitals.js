@@ -11,3 +11,6 @@ const reportWebVitals = onPerfEntry => {
 };
 
 export default reportWebVitals;
+
+// Measures frontend performance metrics such as loading speed and responsiveness
+// Can be used to report analytics or debug performance issues in production

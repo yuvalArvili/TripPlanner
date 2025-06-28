@@ -11,10 +11,12 @@ function Register() {
   const [error, setError] = useState('');
 
   const { login, token } = useAuth();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Redirect to home page after successful registration
 
+  // if user is already logged in
   if (token) return <Navigate to="/" />;
 
+    //Handle register from submission
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -24,12 +26,13 @@ function Register() {
       return;
     }
 
-    try {
+    try { // Send registration request to backend
       const res = await axios.post('/api/auth/register', {
         email,
         password,
       });
 
+      // If registration is successful, log in the use
       login(res.data.token);
       navigate('/');
     } catch (err) {

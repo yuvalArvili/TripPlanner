@@ -9,12 +9,14 @@ import Weather from '../components/Weather';
 import DestinationImage from '../components/DestinationImage';
 import SaveTripForm from '../components/SaveTripForm';
 
+// Component to handle map fly-to functionality
 function MapFlyTo({ center }) {
   const map = useMap();
   map.flyTo(center, map.getZoom());
   return null;
 }
 
+// Main component for planning a trip
 function PlanRoute() {
   const [destination, setDestination] = useState('');
   const [tripType, setTripType] = useState('');
@@ -26,6 +28,8 @@ function PlanRoute() {
   const [startPoint, setStartPoint] = useState(null);
   const [showImage, setShowImage] = useState(false);
 
+  // Function to handle form submission and route generation
+  // It checks the trip type and fetches the appropriate route
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -62,9 +66,11 @@ function PlanRoute() {
     } catch (error) {
       console.error('Route generation failed:', error);
       alert('Could not generate route. Try again.');
+      // Reset state if route generation fails
     }
   };
 
+  // Main container for the PlanRoute component
   return (
     <div>
       <div className="plan-container">

@@ -1,3 +1,4 @@
+// Formula to calculate distance between lat/lng pairs
 export function calculateRouteDistanceKm(coords) {
   const R = 6371; // Earth radius in kilometers
   let total = 0;

@@ -1,6 +1,7 @@
 const groqApiKey = process.env.REACT_APP_GROQ_API_KEY;
 const orsApiKey = process.env.REACT_APP_ORS_API_KEY;
 
+// Ensure the prompt is clear and concise for the AI model to understand the requirements.
 export async function getCyclingPointsFromAI(city) {
   const prompt = `Plan a two-day cycling route starting from ${city}. Return exactly three GPS coordinates (A, B, C), where:
 - Day 1 is from A to B and should be up to 60km
@@ -17,6 +18,7 @@ Return only JSON like:
 }
 Return JSON only. No comments. No explanations. No extra text.`;
 
+// Using Groq API for AI model interaction
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -33,6 +35,7 @@ Return JSON only. No comments. No explanations. No extra text.`;
     })
   });
 
+  // Extract the JSON part from the response
   const data = await res.json();
   const content = data.choices[0].message.content;
   const jsonStart = content.indexOf('{');
@@ -40,9 +43,10 @@ Return JSON only. No comments. No explanations. No extra text.`;
   const jsonText = content.slice(jsonStart, jsonEnd + 1);
   const parsed = JSON.parse(jsonText);
 
-  return parsed.points.map(p => [p.lng, p.lat]);
+  return parsed.points.map(p => [p.lng, p.lat]);   // Return the coordinates in [lng, lat] format for OpenRouteService compatibility
 }
 
+// Using POST method to send the start point and options for round trip - ORS API
 export async function fetchCyclingRouteWithRetry(city) {
   async function fetchRoute(from, to) {
     const res = await fetch(`https://api.openrouteservice.org/v2/directions/cycling-regular/geojson`, {
@@ -59,9 +63,11 @@ export async function fetchCyclingRouteWithRetry(city) {
       throw new Error('No route found.');
     }
 
-    return data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+    return data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]); // Convert to [lat, lng] format
   }
 
+// Retry logic to handle potential API failures -
+// This function will attempt to fetch a hiking route up to 5 times before failing
   const maxAttempts = 5;
 
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {

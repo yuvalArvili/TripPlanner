@@ -9,7 +9,8 @@ import PlanRoute from './routes/PlanRoute';
 import TripDetails from './components/TripDetails';
 import Home from './components/Home';
 
-
+// Main application content that includes routing and conditional rendering of the Navbar
+// This component checks the current path and decides whether to show the Navbar or not
 function AppContent() {
   const location = useLocation();
   const [showNavbar, setShowNavbar] = useState(true);

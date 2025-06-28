@@ -1,3 +1,6 @@
+/* Main entry point of the React app
+   Renders the App component inside the #root element in index.html
+   Wraps the App in AuthProvider to provide authentication context*/
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -16,3 +19,4 @@ root.render(
 
 // Optional performance logging
 reportWebVitals();
+

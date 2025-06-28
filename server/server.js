@@ -12,11 +12,6 @@ app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true, limit: '5mb' }));
 
 
-
-app.get('/api/test', (req, res) => {
-  res.json({ message: 'connection succeed!' });
-});
-
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -36,7 +31,7 @@ app.get('/api/protected', authMiddleware, (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log('✅ Server running on port ${PORT}'));
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
 const tripRoutes = require('./routes/trips');
 app.use('/api/trips', tripRoutes);

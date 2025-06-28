@@ -1,5 +1,6 @@
 import '../styles/home.css';
 
+//styling for the home component
 const Home = () => {
   return (
     <div className="home-wrapper">

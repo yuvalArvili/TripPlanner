@@ -3,7 +3,7 @@ import '../styles/Navbar.css';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/authContext';
 
-
+// This component renders the navigation bar with links to home, plan trip, history, and login/logout
 function Navbar() {
   const navigate = useNavigate();
   const { token, logout } = useAuth();

@@ -1,6 +1,7 @@
 const groqApiKey = process.env.REACT_APP_GROQ_API_KEY;
 const orsApiKey = process.env.REACT_APP_ORS_API_KEY;
 
+// Ensure the prompt is clear and concise for the AI model to understand the requirements.
 export async function getStartPointFromAI(city, tripType) {
   const prompt = `Give one GPS coordinate (lat/lng) to use as a starting point for a ${tripType.toLowerCase()} circular route inside the city of ${city}.
 The full round-trip route starting and ending at this point should be between 5 to 15 kilometers in total.
@@ -11,6 +12,7 @@ Return only JSON like:
 }
 No explanation.`;
 
+// Using Groq API for AI model interaction
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
@@ -33,11 +35,14 @@ No explanation.`;
   let jsonStart = content.indexOf('{');
   let jsonEnd = content.lastIndexOf('}');
   let jsonText = content.slice(jsonStart, jsonEnd + 1);
+// Extract the JSON part from the response
 
   const parsed = JSON.parse(jsonText);
   return [parsed.start.lng, parsed.start.lat];
+  // Return the coordinates in [lng, lat] format for OpenRouteService compatibility
 }
 
+// Using POST method to send the start point and options for round trip
 async function fetchRoundTripRoute(start) {
   const res = await fetch('https://api.openrouteservice.org/v2/directions/foot-walking/geojson', {
     method: 'POST',
@@ -57,14 +62,18 @@ async function fetchRoundTripRoute(start) {
     })
   });
 
+  // Check if the response contains valid route data
   const data = await res.json();
   if (!data.features || data.features.length === 0) {
     throw new Error('No route found.');
   }
 
-  return data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]);
+  return data.features[0].geometry.coordinates.map(coord => [coord[1], coord[0]]); // Convert to [lat, lng] format
 }
 
+
+// Retry logic to handle potential API failures -
+// This function will attempt to fetch a hiking route up to 5 times before failing
 export async function fetchHikingRouteWithRetry(city) {
   const maxAttempts = 5;
 

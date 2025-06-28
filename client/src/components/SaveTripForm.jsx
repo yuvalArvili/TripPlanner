@@ -2,15 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/authContext';
 
+// This component allows users to save a trip with coordinates and optional cycling routes
+// It includes a form for trip name and description, and handles submission to the backend
 function SaveTripForm({ coordinates, type, day1 = [], day2 = [] }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const { token } = useAuth();
 
+  // Handle form submission to save the trip
+  // It formats the coordinates and sends a POST request to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formatPoints = (pointsArray) => pointsArray.map(p => {
+    // Ensure all points are valid
+    const formatPoints = (pointsArray) => pointsArray.map(p => { 
       if (Array.isArray(p)) {
         return { lat: p[0], lng: p[1] };
       } else if (typeof p === 'object' && 'lat' in p && 'lng' in p) {
@@ -21,20 +26,22 @@ function SaveTripForm({ coordinates, type, day1 = [], day2 = [] }) {
       }
     }).filter(Boolean);
 
+    // Format coordinates and optional cycling route
     const formattedCoordinates = formatPoints(coordinates);
     const formattedDay1 = formatPoints(day1);
     const formattedDay2 = formatPoints(day2);
 
+    // send the trip data to the backend- to DB
     try {
       await axios.post('/api/trips', {
         name,
         description,
         type,
         coordinates: formattedCoordinates,
-        day1: type === 'cycling' ? formattedDay1 : [],
+        day1: type === 'cycling' ? formattedDay1 : [], // Ensure day1 and day2 is only included for cycling trips
         day2: type === 'cycling' ? formattedDay2 : []
       }, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { Authorization: `Bearer ${token} `}
       });
 
       alert('Trip saved successfully!');
@@ -46,6 +53,7 @@ function SaveTripForm({ coordinates, type, day1 = [], day2 = [] }) {
     }
   };
 
+  
   return (
     <form className="save-trip-form" onSubmit={handleSubmit}>
       <label>

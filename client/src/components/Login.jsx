@@ -13,9 +13,10 @@ function Login() {
 
   if (token) return <Navigate to="/" />;
 
+  //Handle login from submission
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
+    try {// Send login request to backend
       const res = await axios.post('/api/auth/login', { email, password });
       login(res.data.token);
       navigate('/planRoute'); 

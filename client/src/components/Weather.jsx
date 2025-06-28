@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
 
+// This component fetches and displays a 3-day weather forecast based on latitude and longitude
+// It uses the OpenWeatherMap API to get the forecast data
 function Weather({ lat, lon }) {
   const [forecast, setForecast] = useState([]);
 
   useEffect(() => {
     async function fetchForecast() {
-      if (!lat || !lon) return;
+      if (!lat || !lon) return; //Ensure that lat,lan are provided
 
+      // Fetch the weather forecast from OpenWeatherMap API
       const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
       const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&lang=en&appid=${apiKey}`;
 
+      // Fetch the forecast data
       try {
         const response = await fetch(url);
         const data = await response.json();
@@ -25,6 +29,7 @@ function Weather({ lat, lon }) {
     fetchForecast();
   }, [lat, lon]);
 
+  //Render the weather forecast - showing content on the screen
   return (
     <div>
       <h3>3-Day Weather Forecast</h3>
@@ -35,7 +40,7 @@ function Weather({ lat, lon }) {
             <p>{day.weather[0].description}</p>
             <p>🌡 {day.main.temp}°C</p>
             <img
-              src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`}
+              src={`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`} //Display weather icon
               alt="weather icon"
             />
           </div>
