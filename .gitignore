@@ -42,9 +42,6 @@ coverage/
 *.local
 .cache/
 
-# Optional: if using parcel, vite or similar bundlers
-.parcel-cache/
-.vite/
 
 # Optional: if using React Native WebView dev tools
 webview-internal/
