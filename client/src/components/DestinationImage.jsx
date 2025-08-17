@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 function DestinationImage({ destination }) {
   const [imageUrl, setImageUrl] = useState('');
   const [loading, setLoading] = useState(true);
+  const fallbackImage = '/images/default.png';
 
   // Normalize destination input to match common city names
   const normalizeDestination = (input) => { 
@@ -37,10 +38,10 @@ function DestinationImage({ destination }) {
         );
         const data = await response.json();
         const url = data.results[0]?.urls?.regular;
-        setImageUrl(url || ''); // Set image URL or empty if not found
+        setImageUrl(url || fallbackImage); // use fallback image if no result found
       } catch (error) {
         console.error('Failed to fetch image from Unsplash:', error);
-        setImageUrl('');
+        setImageUrl(fallbackImage);
       } finally {
         setLoading(false);
       }
